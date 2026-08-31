@@ -8,7 +8,6 @@ cat >"$CAVA_CFG" <<EOF
 bars = 20
 framerate = 60
 waveform = 1  
-# sensitivity = 100
 
 [input]
 method = pipewire
@@ -22,11 +21,29 @@ ascii_max_range = 7
 bar_delimiter = 59
 
 [smoothing]
-noise_reduction = 88     ; 0-100, default 77. Higher = calmer frame-to-frame motion
-monstercat = 1           ; blends neighboring bar heights into one continuous hill
-waves = 1                ; extends that blending further for a rippling look
-
+noise_reduction = 88
+monstercat = 1
+waves = 1
 EOF
 
+# Process output and emit JSON for Waybar
 cava -p "$CAVA_CFG" | sed -u \
-	's/;//g; s/0/ /g; s/1/▂/g; s/2/▃/g; s/3/▄/g; s/4/▅/g; s/5/▆/g; s/6/▇/g; s/7/█/g'
+	's/;//g; s/0/ /g; s/1/▂/g; s/2/▃/g; s/3/▄/g; s/4/▅/g; s/5/▆/g; s/6/▇/g; s/7/█/g' | awk -v frames=600 '
+BEGIN { silent = 0; }
+{
+    # If the output is empty or only contains spaces
+    if ($0 ~ /^ +$/ || $0 == "") {
+        silent++
+    } else {
+        silent = 0
+    }
+
+    # 600 frames = 10 seconds of silence
+    if (silent >= frames) {
+        # Output a single space to keep widget alive, but flag it as silent for CSS
+        print "{\"text\": \" \", \"class\": \"silent\"}"
+    } else {
+        print "{\"text\": \"" $0 "\", \"class\": \"playing\"}"
+    }
+    fflush(stdout)
+}'

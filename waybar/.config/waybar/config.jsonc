@@ -5,10 +5,17 @@
   "margin-right": 10,
   "spacing": 8,
   "modules-left": [
-    "bluetooth",
-    "pulseaudio",
+    "group/hardware",
     "custom/cava"
   ],
+  "group/hardware": {
+    "orientation": "horizontal",
+    "class": "hardware-pill",
+    "modules": [
+      "bluetooth",
+      "pulseaudio"
+    ]
+  },
   "modules-center": [
     "clock",
     "hyprland/workspaces",
@@ -104,6 +111,7 @@
   "custom/cava": {
     "exec": "~/.config/waybar/scripts/cava.sh",
     "format": "{}",
+    "return-type": "json",
     "tooltip": false,
     "restart-interval": 2
   },
