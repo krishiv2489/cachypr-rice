@@ -1,6 +1,11 @@
 {
   "layer": "top",
+  "margin-top": 10,
+  "margin-left": 10,
+  "margin-right": 10,
+  "spacing": 8,
   "modules-left": [
+    "bluetooth",
     "pulseaudio",
     "custom/cava"
   ],
@@ -10,6 +15,8 @@
     "clock#right"
   ],
   "modules-right": [
+    "tray",
+    "network",
     "battery"
   ],
   "clock": {
@@ -37,13 +44,13 @@
       // "default": ""
     },
     "persistent-workspaces": {
-      "*": 10 // 5 workspaces by default on every monitor
+      "*": 5 // 5 workspaces by default on every monitor
     }
   },
   "battery": {
     "bat": "BAT0",
     "interval": 60,
-    "format": "{icon} {capacity}%  ",
+    "format": "{icon} {capacity}%",
     "format-icons": {
       "default": [
         "󰂎",
@@ -74,8 +81,8 @@
     }
   },
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "format-bluetooth": "{icon}  {volume}% ",
+    "format": "{icon} {volume}%",
+    "format-bluetooth": " {volume}%",
     "format-muted": "",
     "format-icons": {
       "headphone": "",
@@ -91,13 +98,32 @@
         ""
       ]
     },
-    "scroll-step": 1,
-    "on-click": "pavucontrol"
+    "scroll-step": 5
+    // "on-click": "pavucontrol"
   },
   "custom/cava": {
     "exec": "~/.config/waybar/scripts/cava.sh",
     "format": "{}",
     "tooltip": false,
     "restart-interval": 2
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10,
+    "show-passive-items": true
+  },
+  "network": {
+    "format-wifi": "{essid}",
+    "format-ethernet": "󰈀  Wired",
+    "format-disconnected": "⚠  Disconnected",
+    "tooltip-format": "{ifname} via {gwaddr}",
+    "max-length": 15,
+    "on-click": "nm-applet"
+  },
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias} - {device_battery_percentage}% |",
+    "on-click": "blueman-manager "
   }
 }

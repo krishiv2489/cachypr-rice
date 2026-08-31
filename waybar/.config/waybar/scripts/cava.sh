@@ -5,9 +5,10 @@ CAVA_CFG="$CACHE_DIR/waybar_cava.conf"
 
 cat >"$CAVA_CFG" <<EOF
 [general]
-bars = 10
+bars = 20
 framerate = 60
-waveform = 1    
+waveform = 1  
+# sensitivity = 100
 
 [input]
 method = pipewire

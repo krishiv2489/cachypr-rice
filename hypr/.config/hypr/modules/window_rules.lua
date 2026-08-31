@@ -9,16 +9,16 @@
 
 hl.window_rule({
     -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
+    name           = "suppress-maximize-events",
+    match          = { class = ".*" },
 
     suppress_event = "maximize",
 })
 
 hl.window_rule({
     -- Fix some dragging issues with XWayland
-    name  = "fix-xwayland-drags",
-    match = {
+    name     = "fix-xwayland-drags",
+    match    = {
         class      = "^$",
         title      = "^$",
         xwayland   = true,
@@ -28,4 +28,12 @@ hl.window_rule({
     },
 
     no_focus = true,
+})
+hl.window_rule({
+    match = {
+        class = "blueman-manager"
+    },
+    float = true,
+    size = { 400, 300 },
+    move = { 70, 55 }
 })

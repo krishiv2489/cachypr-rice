@@ -9,6 +9,7 @@ require("modules.layouts")
 require("modules.misc")
 require("modules.inputs")
 require("modules.window_rules")
+require("modules.colors")
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 -- "Smart gaps" / "No gaps when only"
