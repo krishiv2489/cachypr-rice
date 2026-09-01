@@ -1,4 +1,7 @@
 #!/bin/bash
+# CAVA feed for Waybar's custom/cava module.
+# Emits JSON so Waybar can read a "playing"/"silent" class and
+# drive the bubble animation from style.css.
 
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
 CAVA_CFG="$CACHE_DIR/waybar_cava.conf"
@@ -7,7 +10,7 @@ cat >"$CAVA_CFG" <<EOF
 [general]
 bars = 20
 framerate = 60
-waveform = 1  
+waveform = 1
 
 [input]
 method = pipewire
@@ -26,22 +29,25 @@ monstercat = 1
 waves = 1
 EOF
 
-# Process output and emit JSON for Waybar
+# ascii digits -> block glyphs (0 = silence, 1-7 = increasing bar height)
 cava -p "$CAVA_CFG" | sed -u \
-	's/;//g; s/0/ /g; s/1/▂/g; s/2/▃/g; s/3/▄/g; s/4/▅/g; s/5/▆/g; s/6/▇/g; s/7/█/g' | awk -v frames=600 '
-BEGIN { silent = 0; }
+	's/;//g; s/0/ /g; s/1/▂/g; s/2/▃/g; s/3/▄/g; s/4/▅/g; s/5/▆/g; s/6/▇/g; s/7/█/g' | awk -v frames=330 '
+# frames = seconds * framerate. 330 = 5.5s at 60fps.
+# Change "frames" above to retune how long silence must last before it hides.
+BEGIN { silent_count = 0 }
 {
-    # If the output is empty or only contains spaces
-    if ($0 ~ /^ +$/ || $0 == "") {
-        silent++
+    line = $0
+    non_space = gsub(/[^ ]/, "&", line)   # count active bar characters this frame
+
+    # Allow up to 1 stray bar so a tiny noise floor cannot block detection
+    if (non_space <= 1) {
+        silent_count++
     } else {
-        silent = 0
+        silent_count = 0
     }
 
-    # 600 frames = 10 seconds of silence
-    if (silent >= frames) {
-        # Output a single space to keep widget alive, but flag it as silent for CSS
-        print "{\"text\": \" \", \"class\": \"silent\"}"
+    if (silent_count >= frames) {
+        print "{\"text\": \"\", \"class\": \"silent\"}"
     } else {
         print "{\"text\": \"" $0 "\", \"class\": \"playing\"}"
     }

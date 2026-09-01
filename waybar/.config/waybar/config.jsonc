@@ -5,33 +5,76 @@
   "margin-right": 10,
   "spacing": 8,
   "modules-left": [
-    "group/hardware",
+    "group/hw-dock",
     "custom/cava"
   ],
-  "group/hardware": {
-    "orientation": "horizontal",
-    "class": "hardware-pill",
-    "modules": [
-      "bluetooth",
-      "pulseaudio"
-    ]
-  },
+  "modules-right": [
+    "group/cpu-dock",
+    "group/net-dock",
+    "battery"
+  ],
   "modules-center": [
     "clock",
     "hyprland/workspaces",
     "clock#right"
   ],
-  "modules-right": [
-    "tray",
-    "network",
-    "battery"
-  ],
+  "group/net-dock": {
+    "orientation": "horizontal",
+    "modules": [
+      "tray",
+      "network"
+    ]
+  },
+  "group/cpu-dock": {
+    "orientation": "horizontal",
+    "modules": [
+      "cpu",
+      "memory",
+      "temperature"
+    ]
+  },
+  "group/hw-dock": {
+    "orientation": "horizontal",
+    "modules": [
+      "bluetooth",
+      "pulseaudio"
+    ]
+  },
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias} - {device_battery_percentage}% |",
+    "on-click": "blueman-manager"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": " {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "󰂑",
+      "headset": "󰂑",
+      "phone": "",
+      "phone-muted": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "scroll-step": 5
+  },
+  "custom/cava": {
+    "exec": "~/.config/waybar/scripts/cava.sh",
+    "format": "{}",
+    "return-type": "json",
+    "tooltip": false,
+    "restart-interval": 2
+  },
   "clock": {
     "format": "{:%I}",
-    "format-alt": "{:%Y-%m-%d %H:%M:%S}"
-  },
-  "clock#right": {
-    "format": "{:%M}",
     "format-alt": "{:%Y-%m-%d %H:%M:%S}"
   },
   "hyprland/workspaces": {
@@ -47,12 +90,26 @@
       "8": "",
       "9": "",
       "10": ""
-      // "active": "",
-      // "default": ""
     },
     "persistent-workspaces": {
-      "*": 5 // 5 workspaces by default on every monitor
+      "*": 5
     }
+  },
+  "clock#right": {
+    "format": "{:%M}",
+    "format-alt": "{:%Y-%m-%d %H:%M:%S}"
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10,
+    "show-passive-items": true
+  },
+  "network": {
+    "format-wifi": "  {bandwidthDownBytes}   {bandwidthUpBytes}",
+    "format-ethernet": "󰈀  Wired  {bandwidthDownBytes}   {bandwidthUpBytes}",
+    "format-disconnected": "⚠  Disconnected",
+    "tooltip-format": "{essid} via {gwaddr}",
+    "on-click": "nm-applet"
   },
   "battery": {
     "bat": "BAT0",
@@ -87,51 +144,24 @@
       ]
     }
   },
-  "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-bluetooth": " {volume}%",
-    "format-muted": "",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "󰂑",
-      "headset": "󰂑",
-      "phone": "",
-      "phone-muted": "",
-      "portable": "",
-      "car": "",
-      "default": [
-        "",
-        "",
-        ""
-      ]
-    },
-    "scroll-step": 5
-    // "on-click": "pavucontrol"
+  "cpu": {
+    "interval": 2,
+    "format": " {usage}%",
+    "max-length": 10
   },
-  "custom/cava": {
-    "exec": "~/.config/waybar/scripts/cava.sh",
-    "format": "{}",
-    "return-type": "json",
-    "tooltip": false,
-    "restart-interval": 2
+  "memory": {
+    "interval": 30,
+    "format": " {}%",
+    "max-length": 10
   },
-  "tray": {
-    "icon-size": 18,
-    "spacing": 10,
-    "show-passive-items": true
-  },
-  "network": {
-    "format-wifi": "{essid}",
-    "format-ethernet": "󰈀  Wired",
-    "format-disconnected": "⚠  Disconnected",
-    "tooltip-format": "{ifname} via {gwaddr}",
-    "max-length": 15,
-    "on-click": "nm-applet"
-  },
-  "bluetooth": {
-    "format": " {status}",
-    "format-connected": "󰂱 {device_alias}",
-    "format-connected-battery": "󰂱 {device_alias} - {device_battery_percentage}% |",
-    "on-click": "blueman-manager "
+  "temperature": {
+    "interval": 10,
+    "hwmon-path": [
+      "/sys/class/hwmon/hwmon1/temp1_input",
+      "/sys/class/thermal/thermal_zone0/temp"
+    ],
+    "critical-threshold": 80,
+    "format-critical": "  {temperatureC}°C",
+    "format": "  {temperatureC}°C"
   }
 }
