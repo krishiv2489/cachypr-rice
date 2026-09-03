@@ -1,0 +1,45 @@
+configuration {
+    modi: "drun,run,window,ssh,filebrowser,Power:~/.config/rofi/powermenu.sh";
+    combi-modes: "window,drun,ssh,filebrowser,Power:~/.config/rofi/powermenu.sh";
+
+    combi-hide-mode-prefix: true;
+    markup: true;
+    
+    drun-display-format: "{name}&#09;<span foreground='#a6adc8'><i>[!d]</i></span>";
+    window-format: "{c}&#09;<span foreground='#a6adc8'><i>[!w]</i></span>";
+
+    kb-cancel: "Escape,Alt+F1";
+    
+    show-icons: true;
+    
+    disable-history: false;
+    
+    matching: "fuzzy";
+    tokenize: true;
+
+    sort: true;
+    sorting-method: "fzf";
+
+    location: 0;
+    dpi: 0;
+
+    drun{
+        scan-desktop: true;
+        parse-user: true;
+        parse-system: true;
+        DBusActivatable: false;
+        drun-use-desktop-cache: true;
+    }
+
+    filebrowser {
+        directory: "/home/krishiv";
+        sorting-method: "name";      /* name | mtime | atime | ctime */
+        directories-first: true;
+        show-hidden: false;     
+        command: "xdg-open";
+    }
+
+    run-shell-command: "kitty -e {cmd}";
+}
+
+@theme "~/.config/rofi/theme.rasi"

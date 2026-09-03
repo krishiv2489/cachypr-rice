@@ -1,0 +1,80 @@
+@import "~/.config/rofi/colors/colors.rasi"
+
+* {
+    border-subtle: rgba(255, 255, 255, 0.1);
+    
+    background-color: transparent;
+    text-color: @fg;
+    margin: 0;
+    padding: 0;
+    spacing: 0; 
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+window {
+    width: 40%;
+    background-color: transparent;
+    border: 0px;
+}
+
+/* This adds the physical gap between the search pill and the results card */
+mainbox {
+    spacing: 10px; 
+}
+
+/* Pill 1: The Search Bar */
+inputbar {
+    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0.65);
+    border: 1px;
+    border-color: @border-subtle;
+    padding: 14px 24px;
+
+    children: [entry]; 
+}
+
+prompt {
+    padding: 0px 15px 0px 0px;
+    text-color: @accent;
+}
+
+entry {
+    placeholder: "  Search";
+    placeholder-color: rgba(255, 255, 255, 0.6);
+    text-color: @fg;
+    cursor-color: @fg;
+    background-color: transparent;
+}
+
+/* Pill 2: The Results Card */
+listview {
+    lines: 5;
+    border-radius: 24px;                   /* One UI style card rounding */
+    background-color: rgba(0, 0, 0, 0.8); /* Exact match to Waybar background */
+    border: 1px;
+    border-color: @border-subtle;
+    padding: 14px;
+    spacing: 4px;               
+}
+
+/* Individual Search Results */
+element {
+    padding: 12px 18px;
+    border-radius: 999px;                  /* Pill shape for internal list items */
+    children: [element-icon, element-text];
+}
+
+element-icon {
+    size: 24px;                 
+    padding: 0px 12px 0px 0px;
+}
+
+/* Active Selection */
+element selected {
+    background-color: rgba(255, 255, 255, 0.15); /* Exact match to Waybar button:hover */
+    text-color: @accent;        
+}
+
+element-text {
+    tab-stops: [ 34ch ];
+}

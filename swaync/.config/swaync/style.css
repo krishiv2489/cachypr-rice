@@ -1,0 +1,91 @@
+/* CachyOS Dark Aesthetic for SwayNC */
+@define-color bg-base rgba(17, 22, 29, 0.85);       /* Deep slate with transparency */
+@define-color bg-hover rgba(30, 38, 49, 0.95);      /* Lighter slate for hover states */
+@define-color accent #08c976;                       /* CachyOS signature green */
+@define-color accent-hover #0ab36b;
+@define-color text-main #e2e8f0;
+@define-color text-muted #94a3b8;
+@define-color border-color rgba(8, 201, 118, 0.3);  /* Subtly tinted accent border */
+
+* {
+    font-family: "FiraCode Nerd Font", "JetBrains Mono", sans-serif;
+    font-weight: 500;
+}
+
+/* Control Center Panel */
+.control-center .root > box {
+    background: @bg-base;
+    border: 1px solid @border-color;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+/* Individual Notifications */
+.notification-row .notification-background {
+    background: @bg-base;
+    border: 1px solid @border-color;
+    border-radius: 12px;
+    margin: 6px;
+    padding: 0;
+}
+
+.notification-row .notification-background .notification {
+    padding: 12px;
+}
+
+.notification-row .notification-background .notification .summary {
+    color: @accent;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.notification-row .notification-background .notification .time {
+    color: @text-muted;
+    font-size: 12px;
+}
+
+.notification-row .notification-background .notification .body {
+    color: @text-main;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+/* Control Center Headers & Text */
+.widget-title {
+    color: @accent;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px;
+}
+
+/* Do Not Disturb Switch */
+.widget-dnd > switch {
+    background: @bg-hover;
+    border-radius: 10px;
+    border: 1px solid @border-color;
+}
+
+.widget-dnd > switch:checked {
+    background: @accent;
+    border-color: @accent;
+}
+
+.widget-dnd > switch slider {
+    background: @text-main;
+    border-radius: 10px;
+}
+
+/* Clear All Button */
+.widget-title > button {
+    background: @bg-hover;
+    color: @text-main;
+    border-radius: 6px;
+    border: 1px solid @border-color;
+    padding: 4px 12px;
+}
+
+.widget-title > button:hover {
+    background: @accent;
+    color: @bg-base;
+    border-color: @accent;
+}

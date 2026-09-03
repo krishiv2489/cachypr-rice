@@ -1,9 +1,10 @@
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "nemo"
-local menu        = "pgrep rofi >/dev/null 2>&1 && killall rofi || rofi -show run"
+local menu        = "pgrep rofi >/dev/null 2>&1 && killall rofi || rofi -show combi -config ~/.config/rofi/config.rasi"
 local browser     = "firefox"
 local codeEditor  = "code"
+
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
@@ -19,11 +20,12 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(codeEditor))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("rofi -show Power -modes 'Power:~/.config/rofi/powermenu.sh'"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("/home/krishiv/.config/waybar/scripts/launch.sh"))
-
+hl.bind(mainMod .. " + SHIFT + ESCAPE", hl.dsp.exec_cmd("missioncenter"))
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
